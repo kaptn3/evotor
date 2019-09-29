@@ -13,15 +13,21 @@
     >
       <b-navbar-item
         tag="router-link"
-        to="bids"
+        to="/routes"
       >
-        Заявки
+        Номера маршрутов
       </b-navbar-item>
       <b-navbar-item
         tag="router-link"
-        to="offers"
+        to="/stops"
       >
-        Предложения
+        Остановки
+      </b-navbar-item>
+      <b-navbar-item
+        tag="router-link"
+        to="/costs"
+      >
+        Стоимости проезда
       </b-navbar-item>
     </template>
 

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';
+import Routes from './views/Routes.vue';
 
 Vue.use(Router);
 
@@ -14,11 +15,23 @@ export default new Router({
       component: Login,
       beforeEnter(to, from, next) {
         if (localStorage.getItem('user-token')) {
-          next('/bids');
+          next('/routes');
         } else {
           next();
         }
       }
+    },
+    {
+      path: '/routes',
+      name: 'routes',
+      component: Routes/*,
+      beforeEnter(to, from, next) {
+        if (localStorage.getItem('user-token')) {
+          next();
+        } else {
+          next('/');
+        }
+      }*/
     },
     {
       path: '*',

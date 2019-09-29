@@ -19,7 +19,7 @@
 
 <style>
   .app__inner {
-    padding: 0 15px;
+    padding: 30px 15px;
   }
 
   .header {

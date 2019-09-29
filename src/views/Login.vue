@@ -65,17 +65,13 @@
         axios({
           method: 'POST',
           url,
-          header: {
-            'Content-type': 'application/json'
-          },
-          crossDomain: true,
           data
         })
           .then((res) => {
             const { token } = res.data;
             this.$store.commit('auth', token);
             this.error = '';
-            this.$router.push('/bids');
+            this.$router.push('/routes');
           })
           .catch(() => {
             this.$store.commit('logout');
