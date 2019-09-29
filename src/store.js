@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('user-token') || '',
     nds: [
+      'Без НДС',
       'Основная ставка 0%',
       'Основная ставка 10%',
       'Расчётная ставка 10%',

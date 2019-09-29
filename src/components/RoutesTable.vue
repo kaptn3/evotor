@@ -41,7 +41,7 @@
 
         for (let i = 0; i < this.data.length; i++) {
           const { nds } = this.data[i];
-          body[i].nds = this.$store.state.nds[nds - 1];
+          body[i].nds = this.$store.state.nds[nds];
         }
 
         return body;

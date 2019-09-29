@@ -32,8 +32,8 @@
         >
           <option
             v-for="(option, index) in nds"
-            :key="index + 1"
-            :value="index + 1"
+            :key="index"
+            :value="index"
           >
             {{ option }}
           </option>
