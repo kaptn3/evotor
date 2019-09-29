@@ -1,6 +1,6 @@
 <template>
   <div>
-    <routes-table :body="body"/>
+    <routes-table :data="body"/>
     btn Добавить
   </div>
 </template>
@@ -20,7 +20,6 @@
       };
     },
     mounted() {
-      console.log(this.$store.state.token);
       const config = {
         headers: {
           'Authorization': `Bearer ${this.$store.state.token}`

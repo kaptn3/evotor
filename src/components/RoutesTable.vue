@@ -1,26 +1,22 @@
 <template>
   <section>
-    <b-table
-      :data="data"
-      :columns="head"
-      :hoverable="true"
-      :loading="loading"
-      :mobile-cards="true"
-    >
-      <template slot="empty">
-        <section class="content has-text-grey has-text-centered">
-          <p>Данные не найдены</p>
-        </section>
-      </template>
-    </b-table>
+    <a-table
+      :body="body"
+      :head="head"
+    />
   </section>
 </template>
 
 <script>
+  import ATable from './ATable';
+
   export default {
     name: 'RoutesTable',
+    components: {
+      ATable
+    },
     props: {
-      body: {
+      data: {
         type: Array,
         default() { return []; }
       }
@@ -40,24 +36,32 @@
       };
     },
     computed: {
-      data() {
-        const body = this.body;
+      body() {
+        const body = this.data;
 
-        for (let i = 0; i < this.body.length; i++) {
-          let { nds } = this.body[i];
+        for (let i = 0; i < this.data.length; i++) {
+          let { nds } = this.data[i];
           switch (nds) {
-            case 0:
-              nds = 'Без НДС';
-            case 1:
-              nds = 'Основная ставка 0%';
-            case 2:
-              nds = 'Основная ставка 10%';
-            case 3:
-              nds = 'Расчётная ставка 10%';
-            case 4:
-              nds = 'Основная ставка 18%';
-            case 5:
-              nds = 'Расчётная ставка 18%';
+          case 0:
+            nds = 'Без НДС';
+            break;
+          case 1:
+            nds = 'Основная ставка 0%';
+            break;
+          case 2:
+            nds = 'Основная ставка 10%';
+            break;
+          case 3:
+            nds = 'Расчётная ставка 10%';
+            break;
+          case 4:
+            nds = 'Основная ставка 18%';
+            break;
+          case 5:
+            nds = 'Расчётная ставка 18%';
+            break;
+          default:
+            nds = 'Ошибка';
           }
 
           body[i].nds = nds;
