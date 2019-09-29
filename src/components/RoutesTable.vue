@@ -40,31 +40,8 @@
         const body = this.data;
 
         for (let i = 0; i < this.data.length; i++) {
-          let { nds } = this.data[i];
-          switch (nds) {
-          case 0:
-            nds = 'Без НДС';
-            break;
-          case 1:
-            nds = 'Основная ставка 0%';
-            break;
-          case 2:
-            nds = 'Основная ставка 10%';
-            break;
-          case 3:
-            nds = 'Расчётная ставка 10%';
-            break;
-          case 4:
-            nds = 'Основная ставка 18%';
-            break;
-          case 5:
-            nds = 'Расчётная ставка 18%';
-            break;
-          default:
-            nds = 'Ошибка';
-          }
-
-          body[i].nds = nds;
+          const { nds } = this.data[i];
+          body[i].nds = this.$store.state.nds[nds - 1];
         }
 
         return body;

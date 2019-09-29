@@ -7,7 +7,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    token: localStorage.getItem('user-token') || ''
+    token: localStorage.getItem('user-token') || '',
+    nds: [
+      'Основная ставка 0%',
+      'Основная ставка 10%',
+      'Расчётная ставка 10%',
+      'Основная ставка 18%',
+      'Расчётная ставка 18%'
+    ]
   },
   mutations: {
     auth(state, token) {
