@@ -25,7 +25,7 @@
           required
         />
       </b-field>
-      <b-field label="Simple">
+      <b-field label="НДС для маршрута">
         <b-select
           v-model="indexNds"
           placeholder="НДС для маршрута"
