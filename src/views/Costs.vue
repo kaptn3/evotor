@@ -23,18 +23,27 @@
       </p>
     </b-field>
 
-    <section class="columns">
+    <section
+      v-if="stops.length > 0"
+      class="columns is-multiline"
+    >
       <div
         v-for="(item, index) in stops"
         :key="index"
         class="column is-3"
       >
         <card
+          :stops="stops"
           :stop="item"
           :costs="costs"
+          :route="routeId"
+          @update="isModalActive = $event"
         />
       </div>
     </section>
+    <div v-else>
+      Нет данных
+    </div>
   </div>
 </template>
 
@@ -57,8 +66,14 @@
         config,
         routeId: 0,
         stops: [],
-        costs: []
+        costs: [],
+        isModalActive: false
       };
+    },
+    watch: {
+      isModalActive() {
+        this.showStops();
+      }
     },
     mounted() {
       const url = `${process.env.VUE_APP_API}routes/`;

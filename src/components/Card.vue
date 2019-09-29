@@ -19,7 +19,10 @@
       </div>
     </div>
     <footer class="card-footer">
-      <button class="button is-info card-footer__btn">
+      <button
+        class="button is-info card-footer__btn"
+        @click="isModalActive = true"
+      >
         Добавить остановку
       </button>
       <b-modal
@@ -27,7 +30,11 @@
         :width="640"
         scroll="keep"
       >
-        <add-cost/>
+        <add-cost
+          :id="stop.id"
+          :stops="stops"
+          :route="route"
+        />
       </b-modal>
     </footer>
   </div>
@@ -47,12 +54,25 @@
       costs: {
         type: [Array, Object],
         default() { return []; }
+      },
+      stops: {
+        type: Array,
+        required: true
+      },
+      route: {
+        type: Number,
+        required: true
       }
     },
     data() {
       return {
         isModalActive: false
       };
+    },
+    watch: {
+      isModalActive() {
+        this.$emit('update', this.isModalActive);
+      }
     }
   };
 </script>
