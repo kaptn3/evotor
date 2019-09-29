@@ -27,12 +27,11 @@
       head: {
         type: Array,
         default() { return []; }
+      },
+      loading: {
+        type: Boolean,
+        required: true
       }
-    },
-    data() {
-      return {
-        loading: false
-      };
     }
   };
 </script>

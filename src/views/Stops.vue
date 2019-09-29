@@ -13,7 +13,10 @@
     >
       <add-stops/>
     </b-modal>
-    <stops-table :body="body"/>
+    <stops-table
+      :loading="loading"
+      :body="body"
+    />
   </div>
 </template>
 
@@ -30,7 +33,8 @@
     data() {
       return {
         body: [],
-        isModalActive: false
+        isModalActive: false,
+        loading: false
       };
     },
     watch: {
@@ -43,6 +47,7 @@
     },
     methods: {
       getData() {
+        this.loading = true;
         const url = `${process.env.VUE_APP_API}stop-points/?type=all`;
         const config = {
           headers: {
@@ -52,6 +57,7 @@
         axios(url, config)
           .then((res) => {
             this.body = res.data;
+            this.loading = false;
           })
           .catch(() => {
             this.$router.push('/login');

@@ -6,7 +6,10 @@
     >
       Добавить маршрут
     </button>
-    <routes-table :data="body"/>
+    <routes-table
+      :loading="loading"
+      :data="body"
+    />
     <b-modal
       :active.sync="isModalActive"
       :width="640"
@@ -31,7 +34,8 @@
     data() {
       return {
         body: [],
-        isModalActive: false
+        isModalActive: false,
+        loading: false
       };
     },
     watch: {
@@ -44,6 +48,7 @@
     },
     methods: {
       getData() {
+        this.loading = true;
         const config = {
           headers: {
             'Authorization': `Bearer ${this.$store.state.token}`
@@ -53,6 +58,7 @@
         axios.get(url, config)
           .then((res) => {
             this.body = res.data;
+            this.loading = false;
           })
           .catch(() => {
             this.$router.push('/login');

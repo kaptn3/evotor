@@ -2,6 +2,7 @@
   <a-table
     :body="abody"
     :head="head"
+    :loading="loading"
   />
 </template>
 
@@ -9,13 +10,17 @@
   import ATable from './ATable';
 
   export default {
+    components: { ATable },
     props: {
       body: {
         type: Array,
         default() { return []; }
+      },
+      loading: {
+        type: Boolean,
+        required: true
       }
     },
-    components: { ATable },
     data() {
       return {
         head: [

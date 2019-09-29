@@ -3,6 +3,7 @@
     <a-table
       :body="body"
       :head="head"
+      :loading="loading"
     />
   </section>
 </template>
@@ -19,6 +20,10 @@
       data: {
         type: Array,
         default() { return []; }
+      },
+      loading: {
+        type: Boolean,
+        required: true
       }
     },
     data() {
@@ -31,8 +36,7 @@
           {
             field: 'nds',
             label: 'НДС для маршрута'
-          }],
-        loading: false
+          }]
       };
     },
     computed: {
