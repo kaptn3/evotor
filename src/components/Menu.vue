@@ -1,10 +1,13 @@
 <template>
-  <b-navbar type="is-info" class="navbar">
+  <b-navbar
+    type="is-info"
+    class="navbar"
+  >
     <template slot="brand">
       <b-navbar-item
         tag="span"
       >
-        Evator
+        Эвотор
       </b-navbar-item>
     </template>
     <template
