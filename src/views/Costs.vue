@@ -29,33 +29,10 @@
         :key="index"
         class="column is-3"
       >
-        <div
-          class="card"
-        >
-          <header class="card-header">
-            <p class="card-header-title">
-              {{ item.name }}
-            </p>
-          </header>
-          <div
-            v-if="costs[item.id]"
-            class="card__content"
-          >
-            <div
-              v-for="(cost, costIndex) in costs[item.id]"
-              :key="costIndex"
-              class="card__cost"
-            >
-              {{ cost.stop_point_to_name }}
-              (ПЛН={{ cost.price }}, ЛГТ={{ cost.privilege_price }}, БАГ={{ cost.bag_price }})
-            </div>
-          </div>
-          <footer class="card-footer">
-            <button class="button is-info card-footer__btn">
-              Добавить остановку
-            </button>
-          </footer>
-        </div>
+        <card
+          :stop="item"
+          :costs="costs"
+        />
       </div>
     </section>
   </div>
@@ -63,9 +40,11 @@
 
 <script>
   import axios from 'axios';
+  import Card from '../components/Card';
 
   export default {
     name: 'Costs',
+    components: { Card },
     data() {
       const config = {
         headers: {
@@ -111,14 +90,5 @@
 <style scoped>
   .column {
     margin-top: 20px;
-  }
-
-  .card-footer__btn {
-    margin: 10px auto;
-  }
-
-  .card__content:not(:last-child) {
-    border-bottom: 1px solid #dbdbdb;
-    padding: 0.75rem;
   }
 </style>
