@@ -19,23 +19,23 @@
       <h2 class="title is-3">
         Добавить маршрут
       </h2>
-      <b-field label="Номер маршрута (наименование)">
+      <b-field label="Наименование остановки">
         <b-input
           v-model="name"
           required
         />
       </b-field>
-      <b-field label="Simple">
+      <b-field label="Маршрут">
         <b-select
-          v-model="indexNds"
-          placeholder="НДС для маршрута"
+          v-model="route"
+          placeholder="Маршрут"
         >
           <option
-            v-for="(option, index) in nds"
-            :key="index + 1"
-            :value="index + 1"
+            v-for="option in routes"
+            :key="option.id"
+            :value="option.id"
           >
-            {{ option }}
+            {{ option.name }}
           </option>
         </b-select>
       </b-field>
@@ -50,33 +50,41 @@
   import axios from 'axios';
 
   export default {
-    name: 'AddRoute',
+    name: 'AddStops',
     data() {
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${this.$store.state.token}`
+        }
+      };
+
       return {
         status: '',
-        indexNds: '',
-        name: ''
+        route: '',
+        name: '',
+        config,
+        routes: []
       };
     },
-    computed: {
-      nds() {
-        return this.$store.state.nds;
-      }
+    mounted() {
+      const url = `${process.env.VUE_APP_API}routes/`;
+      axios.get(url, this.config)
+        .then((res) => {
+          this.routes = res.data;
+        })
+        .catch(() => {
+          this.$router.push('/login');
+        });
     },
     methods: {
       submitForm(e) {
         e.preventDefault();
-        const config = {
-          headers: {
-            'Authorization': `Bearer ${this.$store.state.token}`
-          }
-        };
         const body = new FormData();
-        body.set('nds', this.indexNds);
+        body.set('route_id', this.route);
         body.set('name', this.name);
 
-        const url = `${process.env.VUE_APP_API}routes/`;
-        axios.post(url, body, config)
+        const url = `${process.env.VUE_APP_API}stop-points/`;
+        axios.post(url, body, this.config)
           .then(() => {
             this.status = 'ok';
           })
