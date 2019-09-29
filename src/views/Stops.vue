@@ -4,7 +4,7 @@
       class="button is-info is-medium"
       @click="isModalActive = true"
     >
-      Добавить маршрут
+      Добавить остановку
     </button>
     <b-modal
       :active.sync="isModalActive"
