@@ -29,6 +29,7 @@
         <b-select
           v-model="indexNds"
           placeholder="НДС для маршрута"
+          required
         >
           <option
             v-for="(option, index) in nds"

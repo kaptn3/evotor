@@ -29,6 +29,7 @@
         <b-select
           v-model="route"
           placeholder="Маршрут"
+          required
         >
           <option
             v-for="option in routes"
