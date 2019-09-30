@@ -103,24 +103,35 @@
     methods: {
       submitForm(e) {
         e.preventDefault();
-        const body = new FormData();
+        /* eslint-disable */
+        const condition = isNaN(this.price) + isNaN(this.privilege_price) + isNaN(this.bag_price);
+        this.price = this.price.replace(',', '.');
+        this.privilege_price = this.privilege_price.replace(',', '.');
+        this.bag_price = this.bag_price.replace(',', '.');
 
-        body.set('bag_price', this.bag_price);
-        body.set('price', this.price);
-        body.set('privilege_price', this.privilege_price);
-        body.set('stop_point_to_id', this.stop_point_to_id);
-        body.set('stop_point_from_id', this.id);
-        body.set('route_id', this.route);
+        this.price = isNaN(this.price) ? '' : this.price;
+        this.privilege_price = isNaN(this.privilege_price) ? '' : this.privilege_price;
+        this.bag_price = isNaN(this.bag_price) ? '' : this.bag_price;
+        if (condition === 0) {
+          const body = new FormData();
 
-        const url = `${process.env.VUE_APP_API}cost/`;
-        axios.post(url, body, this.config)
-          .then(() => {
-            this.status = 'ok';
-          })
-          .catch((err) => {
-            console.log(err);
-            this.status = 'error';
-          });
+          body.set('bag_price', this.bag_price);
+          body.set('price', this.price);
+          body.set('privilege_price', this.privilege_price);
+          body.set('stop_point_to_id', this.stop_point_to_id);
+          body.set('stop_point_from_id', this.id);
+          body.set('route_id', this.route);
+
+          const url = `${process.env.VUE_APP_API}cost/`;
+          axios.post(url, body, this.config)
+            .then(() => {
+              this.status = 'ok';
+            })
+            .catch((err) => {
+              console.log(err);
+              this.status = 'error';
+            });
+        }
       }
     }
   };
