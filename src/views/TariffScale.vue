@@ -83,7 +83,9 @@
     },
     watch: {
       isModalActive() {
-        this.showStops();
+        if (!this.isModalActive) {
+          this.showStops();
+        }
       }
     },
     mounted() {
