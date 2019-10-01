@@ -67,7 +67,7 @@
 
 <style>
   .router-link-active {
-    background-color: #1c7df0;
+    background-color: #0e71de;
     font-weight: 500;
   }
 
