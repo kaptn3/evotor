@@ -1,10 +1,9 @@
 <template>
   <div>
-    <h1>Тарифная сетка</h1>
-    <b-field>
+    <b-field type="is-info">
       <b-select
         v-model="routeId"
-        placeholder="Маршрут"
+        placeholder="Выберите маршрут"
       >
         <option
           v-for="option in data"
@@ -73,7 +72,7 @@
       return {
         data: [],
         config,
-        routeId: 0,
+        routeId: undefined,
         stops: [],
         costs: [],
         isModalActive: false

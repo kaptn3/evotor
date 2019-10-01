@@ -25,10 +25,13 @@
           required
         />
       </b-field>
-      <b-field label="Маршрут">
+      <b-field
+        label="Маршрут"
+        type="is-info"
+      >
         <b-select
           v-model="route"
-          placeholder="Маршрут"
+          placeholder="Выберите маршрут"
           required
         >
           <option
@@ -61,7 +64,7 @@
 
       return {
         status: '',
-        route: '',
+        route: undefined,
         name: '',
         config,
         routes: []

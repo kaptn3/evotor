@@ -28,6 +28,7 @@
       <b-field label="НДС для маршрута">
         <b-select
           v-model="indexNds"
+          type="is-info"
           placeholder="НДС для маршрута"
           required
         >
@@ -55,7 +56,7 @@
     data() {
       return {
         status: '',
-        indexNds: '',
+        indexNds: undefined,
         name: ''
       };
     },
