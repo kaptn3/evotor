@@ -17,23 +17,8 @@
       @submit="submitForm"
     >
       <h2 class="title is-3">
-        Добавить остановку
+        Добавить стоимость
       </h2>
-      <b-field label="Остановка">
-        <b-select
-          v-model="stop_point_to_id"
-          placeholder="Остановка"
-          required
-        >
-          <option
-            v-for="option in stops"
-            :key="option.id"
-            :value="option.id"
-          >
-            {{ option.name }}
-          </option>
-        </b-select>
-      </b-field>
       <b-field label="Полная стоимость">
         <b-input
           v-model="price"
@@ -75,11 +60,11 @@
         type: Number,
         required: true
       },
-      stops: {
-        type: Array,
+      route: {
+        type: Number,
         required: true
       },
-      route: {
+      stopTo: {
         type: Number,
         required: true
       }
@@ -96,9 +81,11 @@
         config,
         bag_price: undefined,
         price: undefined,
-        privilege_price: undefined,
-        stop_point_to_id: undefined
+        privilege_price: undefined
       };
+    },
+    mounted() {
+      console.log(this.stopTo, this.id)
     },
     methods: {
       submitForm(e) {
@@ -118,7 +105,7 @@
           body.set('bag_price', this.bag_price);
           body.set('price', this.price);
           body.set('privilege_price', this.privilege_price);
-          body.set('stop_point_to_id', this.stop_point_to_id);
+          body.set('stop_point_to_id', this.stopTo);
           body.set('stop_point_from_id', this.id);
           body.set('route_id', this.route);
 

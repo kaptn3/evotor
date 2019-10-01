@@ -56,9 +56,21 @@
         <button
           v-else
           class="button is-info"
+          @click="isModalActive = true"
         >
-          Добавить стоимость
+          Добавить стоимость {{ column.id }} {{ row.id }}
         </button>
+        <b-modal
+          :active.sync="isModalActive"
+          :width="640"
+          scroll="keep"
+        >
+          <add-cost
+            :id="column.id"
+            :route="routeId"
+            :stop-to="row.id"
+          />
+        </b-modal>
       </div>
       <div class="column">
         <b>{{ row.name }}, {{ row.id }}</b>
@@ -69,10 +81,10 @@
 
 <script>
   import axios from 'axios';
+  import AddCost from '../components/AddCost';
 
   export default {
-    components: {
-    },
+    components: { AddCost },
     data() {
       const config = {
         headers: {
@@ -110,6 +122,7 @@
         axios.get(url, this.config)
           .then((res) => {
             this.stops = res.data;
+            
 
             axios.get(`${process.env.VUE_APP_API}cost/?route_id=${this.routeId}`)
               .then((res2) => {
