@@ -84,9 +84,6 @@
         privilege_price: undefined
       };
     },
-    mounted() {
-      console.log(this.stopTo, this.id)
-    },
     methods: {
       submitForm(e) {
         e.preventDefault();
@@ -108,6 +105,7 @@
           body.set('stop_point_to_id', this.stopTo);
           body.set('stop_point_from_id', this.id);
           body.set('route_id', this.route);
+          body.set('type', 'scale');
 
           const url = `${process.env.VUE_APP_API}cost/`;
           axios.post(url, body, this.config)
