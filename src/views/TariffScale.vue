@@ -158,6 +158,7 @@
     align-items: center;
     justify-content: center;
     width: 120px;
+    flex-shrink: 0;
   }
 
   .stop-name {
