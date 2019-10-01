@@ -1,33 +1,67 @@
 <template>
   <div>
     <h1>Тарифная сетка</h1>
+    <b-field>
+      <b-select
+        v-model="routeId"
+        placeholder="Маршрут"
+      >
+        <option
+          v-for="option in data"
+          :key="option.id"
+          :value="option.id"
+        >
+          {{ option.name }}
+        </option>
+      </b-select>
+      <p class="control">
+        <button
+          class="button is-info"
+          @click="showStops"
+        >
+          Применить
+        </button>
+      </p>
+    </b-field>
     <div
       class="row"
     >
       <div
         v-for="head in stops"
-        :key="head"
+        :key="head.id"
         class="column"
       >
-        <b>{{ head }}</b>
+        <b>{{ head.name }}, {{ head.id }}</b>
       </div>
-      <div class="column"></div>
+      <div class="column"/>
     </div>
     <div
       v-for="row in stops"
-      :key="row"
+      :key="row.id"
       class="row"
     >
       <div
         v-for="column in stops"
-        :key="column"
+        :key="column.id"
         class="column"
       >
-        {{ column }}
-        {{ row }}
+        <div v-if="checkCost(column.id, row.id).length > 0">
+          <div
+            v-for="(item, index) in checkCost(column.id, row.id)"
+            :key="index"
+          >
+            {{ item }}
+          </div>
+        </div>
+        <button
+          v-else
+          class="button is-info"
+        >
+          Добавить стоимость
+        </button>
       </div>
       <div class="column">
-        <b>{{ row }}</b>
+        <b>{{ row.name }}, {{ row.id }}</b>
       </div>
     </div>
   </div>
@@ -65,7 +99,6 @@
       axios.get(url, this.config)
         .then((res) => {
           this.data = res.data;
-          this.showStops();
         })
         .catch(() => {
           this.$router.push('/login');
@@ -73,21 +106,29 @@
     },
     methods: {
       showStops() {
-        for (let i = 0; i < this.data.length; i++) {
-        const url = `${process.env.VUE_APP_API}stop-points/?route_id=${this.data[i].id}`;
+        const url = `${process.env.VUE_APP_API}stop-points/?route_id=${this.routeId}`;
         axios.get(url, this.config)
           .then((res) => {
-            for (let i = 0; i < res.data.length; i++) {
-              this.stops.push(res.data[i].id);
-            }
-            axios.get(`${process.env.VUE_APP_API}cost/?route_id=${this.data[i].id}`)
+            this.stops = res.data;
+
+            axios.get(`${process.env.VUE_APP_API}cost/?route_id=${this.routeId}`)
               .then((res2) => {
-                console.log(this.stops);
                 this.costs = res2.data;
-                //console.log(this.costs);
               });
           });
+      },
+      checkCost(id, to) {
+        if (this.costs[id]) {
+          const stops = [];
+          for (let i = 0; i < this.costs[id].length; i++) {
+            if (this.costs[id][i].stop_point_to_id === to) {
+              const cost = this.costs[id][i];
+              stops.push(`ПЛН=${cost.price}, ЛГТ=${cost.privilege_price}, БАГ=${cost.bag_price}`);
+            }
+          }
+          return stops;
         }
+        return 'Кнопка';
       }
     }
   };
