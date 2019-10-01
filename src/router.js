@@ -4,6 +4,7 @@ import Login from './views/Login.vue';
 import Routes from './views/Routes.vue';
 import Costs from './views/Costs.vue';
 import Stops from './views/Stops.vue';
+import TariffScale from './views/TariffScale.vue';
 
 Vue.use(Router);
 
@@ -39,6 +40,18 @@ export default new Router({
       path: '/stops',
       name: 'stops',
       component: Stops,
+      beforeEnter(to, from, next) {
+        if (localStorage.getItem('user-token')) {
+          next();
+        } else {
+          next('/');
+        }
+      }
+    },
+    {
+      path: '/tariff-scale',
+      name: 'TariffScale',
+      component: TariffScale,
       beforeEnter(to, from, next) {
         if (localStorage.getItem('user-token')) {
           next();

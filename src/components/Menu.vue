@@ -32,6 +32,12 @@
       >
         Стоимости проезда
       </b-navbar-item>
+      <b-navbar-item
+        tag="router-link"
+        to="/tariff-scale"
+      >
+        Тарифная сетка
+      </b-navbar-item>
     </template>
 
     <template
