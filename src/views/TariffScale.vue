@@ -24,56 +24,36 @@
       </p>
     </b-field>
     <div
+      v-for="(row, index) in stops"
+      :key="index"
       class="row"
     >
       <div
-        v-for="head in stops"
-        :key="head.id"
-        class="column"
+        v-for="(column, columnIndex) in row"
+        :key="columnIndex"
+        class="column is-2 cell"
       >
-        <b>{{ head.name }}, {{ head.id }}</b>
+        <cell-cost
+          :id="column[0].id"
+          :stop-to="column[1].id"
+          :route-id="routeId"
+          :cost="checkCost(column[0].id, column[1].id)"
+          @update="isModalActive = $event"
+        />
       </div>
-      <div class="column"/>
-    </div>
-    <div
-      v-for="row in stops"
-      :key="row.id"
-      class="row"
-    >
-      <div
-        v-for="column in stops"
-        :key="column.id"
-        class="column"
-      >
-        <div v-if="checkCost(column.id, row.id).length > 0">
-          <div
-            v-for="(item, index) in checkCost(column.id, row.id)"
-            :key="index"
-          >
-            {{ item }}
-          </div>
+      <div class="column is-2 number-wrapper">
+        <div
+          v-if="row[0]"
+          class="stop-name"
+        >
+          {{ row[0][1].name }}
         </div>
-        <button
+        <div
           v-else
-          class="button is-info"
-          @click="isModalActive = true"
+          class="stop-name"
         >
-          Добавить стоимость {{ column.id }} {{ row.id }}
-        </button>
-        <b-modal
-          :active.sync="isModalActive"
-          :width="640"
-          scroll="keep"
-        >
-          <add-cost
-            :id="column.id"
-            :route="routeId"
-            :stop-to="row.id"
-          />
-        </b-modal>
-      </div>
-      <div class="column">
-        <b>{{ row.name }}, {{ row.id }}</b>
+          {{ stops[1][0][0].name }}
+        </div>
       </div>
     </div>
   </div>
@@ -81,10 +61,10 @@
 
 <script>
   import axios from 'axios';
-  import AddCost from '../components/AddCost';
+  import CellCost from '../components/CellCost';
 
   export default {
-    components: { AddCost },
+    components: { CellCost },
     data() {
       const config = {
         headers: {
@@ -118,11 +98,20 @@
     },
     methods: {
       showStops() {
+        this.stops = [];
         const url = `${process.env.VUE_APP_API}stop-points/?route_id=${this.routeId}`;
         axios.get(url, this.config)
           .then((res) => {
-            this.stops = res.data;
-            
+            const data = res.data.reverse();
+            for (let i = 0; i < data.length; i++) {
+              const arr = [];
+              for (let k = i + 1; k < data.length; k++) {
+                arr.push([data[k], data[i]]);
+              }
+              this.stops.push(arr);
+            }
+
+            this.stops.reverse();
 
             axios.get(`${process.env.VUE_APP_API}cost/?route_id=${this.routeId}`)
               .then((res2) => {
@@ -130,18 +119,18 @@
               });
           });
       },
-      checkCost(id, to) {
+      checkCost(id, stopTo) {
         if (this.costs[id]) {
           const stops = [];
           for (let i = 0; i < this.costs[id].length; i++) {
-            if (this.costs[id][i].stop_point_to_id === to) {
+            if (this.costs[id][i].stop_point_to_id === stopTo) {
               const cost = this.costs[id][i];
               stops.push(`ПЛН=${cost.price}, ЛГТ=${cost.privilege_price}, БАГ=${cost.bag_price}`);
             }
           }
           return stops;
         }
-        return 'Кнопка';
+        return [];
       }
     }
   };
@@ -152,7 +141,26 @@
     display: flex;
   }
 
-  .column {
+  .cell {
     border: 1px solid #aaa;
+  }
+
+  .row:not(:last-child) .cell {
+    border-bottom: none;
+  }
+
+  .cell:not(:first-child) {
+    border-left: none;
+  }
+
+  .number-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stop-name {
+    font-size: 1.1rem;
+    font-weight: bold;
   }
 </style>
