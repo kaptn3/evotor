@@ -5,29 +5,29 @@
       class="row"
     >
       <div
-        v-for="head in data"
-        :key="head.id"
+        v-for="head in stops"
+        :key="head"
         class="column"
       >
-        <b>{{ head.id }}</b>
+        <b>{{ head }}</b>
       </div>
       <div class="column"></div>
     </div>
     <div
-      v-for="row in data"
-      :key="row.id"
+      v-for="row in stops"
+      :key="row"
       class="row"
     >
       <div
-        v-for="column in data"
-        :key="column.id"
+        v-for="column in stops"
+        :key="column"
         class="column"
       >
-        {{ column.id }}
-        {{ row.id }}
+        {{ column }}
+        {{ row }}
       </div>
       <div class="column">
-        <b>{{ row.id }}</b>
+        <b>{{ row }}</b>
       </div>
     </div>
   </div>
@@ -74,17 +74,19 @@
     methods: {
       showStops() {
         for (let i = 0; i < this.data.length; i++) {
-          const url = `${process.env.VUE_APP_API}stop-points/?route_id=${this.data[i].id}`;
-          axios.get(url, this.config)
-            .then((res) => {
-              this.stops = res.data;
-              console.log(res.data);
-
-              axios.get(`${process.env.VUE_APP_API}cost/?route_id=${this.routeId}`)
-                .then((res2) => {
-                  this.costs = res2.data;
-                });
-            });
+        const url = `${process.env.VUE_APP_API}stop-points/?route_id=${this.data[i].id}`;
+        axios.get(url, this.config)
+          .then((res) => {
+            for (let i = 0; i < res.data.length; i++) {
+              this.stops.push(res.data[i].id);
+            }
+            axios.get(`${process.env.VUE_APP_API}cost/?route_id=${this.data[i].id}`)
+              .then((res2) => {
+                console.log(this.stops);
+                this.costs = res2.data;
+                //console.log(this.costs);
+              });
+          });
         }
       }
     }
@@ -94,5 +96,9 @@
 <style scoped>
   .row {
     display: flex;
+  }
+
+  .column {
+    border: 1px solid #aaa;
   }
 </style>
