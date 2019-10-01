@@ -23,36 +23,34 @@
         </button>
       </p>
     </b-field>
-    <div
-      v-for="(row, index) in stops"
-      :key="index"
-      class="row"
-    >
+    <div class="wrapper">
       <div
-        v-for="(column, columnIndex) in row"
-        :key="columnIndex"
-        class="column is-2 cell"
+        v-for="(row, index) in stops"
+        :key="index"
+        class="row"
       >
         <cell-cost
+          v-for="(column, columnIndex) in row"
           :id="column[0].id"
+          :key="columnIndex"
           :stop-to="column[1].id"
           :route-id="routeId"
           :cost="checkCost(column[0].id, column[1].id)"
           @update="isModalActive = $event"
         />
-      </div>
-      <div class="column is-2 number-wrapper">
-        <div
-          v-if="row[0]"
-          class="stop-name"
-        >
-          {{ row[0][1].name }}
-        </div>
-        <div
-          v-else
-          class="stop-name"
-        >
-          {{ stops[1][0][0].name }}
+        <div class="number-wrapper">
+          <div
+            v-if="row[0]"
+            class="stop-name"
+          >
+            {{ row[0][1].name }}
+          </div>
+          <div
+            v-else
+            class="stop-name"
+          >
+            {{ stops[1][0][0].name }}
+          </div>
         </div>
       </div>
     </div>
@@ -139,12 +137,12 @@
 </script>
 
 <style scoped>
-  .row {
-    display: flex;
+  .wrapper {
+    overflow-x: auto;
   }
 
-  .cell {
-    border: 1px solid #aaa;
+  .row {
+    display: flex;
   }
 
   .row:not(:last-child) .cell {
@@ -159,10 +157,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 120px;
   }
 
   .stop-name {
-    font-size: 1.1rem;
+    font-size: 1.02rem;
     font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
   }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cell">
     <div v-if="cost.length > 0">
       <div
         v-for="(item, index) in cost"
@@ -13,7 +13,7 @@
       class="button is-info"
       @click="isModalActive = true"
     >
-      Добавить стоимость
+      +
     </button>
     <b-modal
       :active.sync="isModalActive"
@@ -65,3 +65,19 @@
     }
   };
 </script>
+
+<style scoped>
+  .button {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .cell {
+    border: 1px solid #aaa;
+    width: 120px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
