@@ -10,7 +10,7 @@
           :key="option.id"
           :value="option.id"
         >
-          {{ option.name }}
+          {{ option.name }} {{ option.id }}
         </option>
       </b-select>
       <p class="control">
@@ -101,20 +101,34 @@
         const url = `${process.env.VUE_APP_API}stop-points/?route_id=${this.routeId}`;
         axios.get(url, this.config)
           .then((res) => {
-            const data = res.data.reverse();
-            for (let i = 0; i < data.length; i++) {
-              const arr = [];
-              for (let k = i + 1; k < data.length; k++) {
-                arr.push([data[k], data[i]]);
+            // собираем все остановки, включая route
+            const stopIds = [];
+            const stops = [];
+            for (let j = 0; j < res.data.length; j++) {
+              const obj = res.data[j];
+              if (stopIds.indexOf(obj.id) === -1) {
+                stopIds.push(obj.id);
+                stops.push({
+                  id: obj.id,
+                  name: obj.name
+                });
               }
-              this.stops.push(arr);
             }
 
+            stops.reverse();
+            for (let i = 0; i < stops.length; i++) {
+              const arr = [];
+              for (let k = i + 1; k < stops.length; k++) {
+                arr.push([stops[k], stops[i]]);
+              }
+              arr.reverse();
+              this.stops.push(arr);
+            }
             this.stops.reverse();
-
             axios.get(`${process.env.VUE_APP_API}cost/?route_id=${this.routeId}`)
               .then((res2) => {
                 this.costs = res2.data;
+                console.log(this.costs);
               });
           });
       },
