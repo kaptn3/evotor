@@ -22,6 +22,15 @@
       <b-field label="Наименование остановки">
         <b-input
           v-model="name"
+          placeholder="Наименование остановки"
+          required
+        />
+      </b-field>
+      <b-field label="Сортировка">
+        <b-input
+          v-model="sort"
+          placeholder="Сортировка"
+          type="number"
           required
         />
       </b-field>
@@ -67,7 +76,8 @@
         route: undefined,
         name: '',
         config,
-        routes: []
+        routes: [],
+        sort: undefined
       };
     },
     mounted() {
@@ -86,6 +96,7 @@
         const body = new FormData();
         body.set('route_id', this.route);
         body.set('name', this.name);
+        body.set('sort', this.sort);
 
         const url = `${process.env.VUE_APP_API}stop-points/`;
         axios.post(url, body, this.config)
