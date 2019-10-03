@@ -17,7 +17,7 @@
       @submit="submitForm"
     >
       <h2 class="title is-3">
-        Добавить маршрут
+        Добавить остановку
       </h2>
       <b-field label="Наименование остановки">
         <b-input
