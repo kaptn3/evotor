@@ -1,8 +1,12 @@
 <template>
   <div class="cell">
-    <div v-if="cost.length > 0">
+    <div
+      v-if="cost.stops.length > 0"
+      class="cell__inner"
+      @click="isModalActive = true"
+    >
       <div
-        v-for="(item, index) in cost"
+        v-for="(item, index) in cost.stops"
         :key="index"
       >
         {{ item }}
@@ -24,6 +28,8 @@
         :id="id"
         :route="routeId"
         :stop-to="stopTo"
+        :cost="cost"
+        :put="cost.stops.length > 0"
       />
     </b-modal>
   </div>
@@ -49,7 +55,7 @@
         required: true
       },
       cost: {
-        type: Array,
+        type: Object,
         required: true
       }
     },
@@ -66,19 +72,29 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .button {
     font-size: 1.5rem;
     font-weight: bold;
+    margin: 15px;
   }
 
   .cell {
     border: 1px solid #aaa;
     width: 120px;
-    padding: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    cursor: pointer;
+
+    &__inner {
+      padding: 15px;
+
+      &:hover,
+      &:focus {
+        background-color: #eee;
+      }
+    }
   }
 </style>

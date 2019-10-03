@@ -67,6 +67,14 @@
       stopTo: {
         type: Number,
         required: true
+      },
+      cost: {
+        type: Object,
+        default: undefined
+      },
+      put: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -83,6 +91,23 @@
         price: undefined,
         privilege_price: undefined
       };
+    },
+    mounted() {
+      if (this.cost && this.put) {
+        const str = this.cost.stops[0];
+        this.price = str.substring(
+          str.indexOf('ПЛН=') + 4,
+          str.indexOf(', ')
+        );
+        this.privilege_price = str.substring(
+          str.indexOf('ЛГТ=') + 4,
+          str.indexOf('БАГ=') - 2
+        );
+        this.bag_price = str.substring(
+          str.indexOf('БАГ=') + 4,
+          str.length
+        );
+      }
     },
     methods: {
       submitForm(e) {
@@ -108,7 +133,12 @@
           body.set('type', 'scale');
 
           const url = `${process.env.VUE_APP_API}cost/`;
-          axios.post(url, body, this.config)
+          let method = 'post';
+          if (this.put) {
+            method = 'put';
+            body.set('cost_id', this.cost.cost_id);
+          }
+          axios[method](url, body, this.config)
             .then(() => {
               this.status = 'ok';
             })

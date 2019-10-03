@@ -128,22 +128,30 @@
             axios.get(`${process.env.VUE_APP_API}cost/?route_id=${this.routeId}`)
               .then((res2) => {
                 this.costs = res2.data;
-                console.log(this.costs);
               });
           });
       },
       checkCost(id, stopTo) {
         if (this.costs[id]) {
           const stops = [];
+          let costId;
           for (let i = 0; i < this.costs[id].length; i++) {
             if (this.costs[id][i].stop_point_to_id === stopTo) {
               const cost = this.costs[id][i];
+              costId = this.costs[id][i].cost_id;
               stops.push(`ПЛН=${cost.price}, ЛГТ=${cost.privilege_price}, БАГ=${cost.bag_price}`);
             }
           }
-          return stops;
+
+          return {
+            cost_id: costId,
+            stops
+          };
         }
-        return [];
+        return {
+          costId: undefined,
+          stops: []
+        };
       }
     }
   };
