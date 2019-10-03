@@ -31,6 +31,10 @@
           {
             'label': 'Маршрут',
             'field': 'route'
+          },
+          {
+            'label': 'Сортировка',
+            'field': 'sort'
           }
         ]
       };
@@ -42,6 +46,7 @@
           const obj = {};
           obj.name = this.body[i].name;
           obj.route = this.body[i].route.name;
+          obj.sort = this.body[i].sort;
           data.push(obj);
         }
         return data;
