@@ -1,5 +1,3 @@
-# yep.kaptn.works
-
 ## Project setup
 ```
 npm install
