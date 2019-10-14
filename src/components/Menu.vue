@@ -3,13 +3,6 @@
     type="is-info"
     class="navbar"
   >
-    <template slot="brand">
-      <b-navbar-item
-        tag="span"
-      >
-        Эвотор
-      </b-navbar-item>
-    </template>
     <template
       v-if="$store.state.token"
       slot="start"
@@ -26,12 +19,14 @@
       >
         Остановки
       </b-navbar-item>
+      <!--
       <b-navbar-item
         tag="router-link"
         to="/costs"
       >
         Стоимости проезда
       </b-navbar-item>
+      -->
       <b-navbar-item
         tag="router-link"
         to="/tariff-scale"

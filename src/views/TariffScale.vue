@@ -10,7 +10,7 @@
           :key="option.id"
           :value="option.id"
         >
-          {{ option.name }} {{ option.id }}
+          {{ option.name }}
         </option>
       </b-select>
       <p class="control">
