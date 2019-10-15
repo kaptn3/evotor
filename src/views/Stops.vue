@@ -49,7 +49,6 @@
         this.getData();
       },
       deleteEvent() {
-        console.log('ee');
         this.getData();
       }
     },
