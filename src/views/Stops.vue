@@ -16,6 +16,8 @@
     <stops-table
       :loading="loading"
       :body="body"
+      @update="isModalActive2 = $event"
+      @delete="deleteEvent = $event"
     />
   </div>
 </template>
@@ -34,11 +36,20 @@
       return {
         body: [],
         isModalActive: false,
-        loading: false
+        isModalActive2: false,
+        loading: false,
+        deleteEvent: undefined
       };
     },
     watch: {
       isModalActive() {
+        this.getData();
+      },
+      isModalActive2() {
+        this.getData();
+      },
+      deleteEvent() {
+        console.log('ee');
         this.getData();
       }
     },
