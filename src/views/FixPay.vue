@@ -89,6 +89,7 @@
     },
     methods: {
       showStops() {
+        this.loading = true;
         const url = `${process.env.VUE_APP_API}stat/?route_id=${this.routeId}`;
         axios.get(url, this.config)
           .then((res) => {
