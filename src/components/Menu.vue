@@ -33,6 +33,18 @@
       >
         Тарифная сетка
       </b-navbar-item>
+      <b-navbar-item
+        tag="router-link"
+        to="/fix-pay"
+      >
+        Статистика фикс. оплаты
+      </b-navbar-item>
+      <b-navbar-item
+        tag="router-link"
+        to="/stats-tariff"
+      >
+        Статистика по тарифной сетке
+      </b-navbar-item>
     </template>
 
     <template
