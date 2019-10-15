@@ -5,6 +5,7 @@ import Routes from './views/Routes.vue';
 import Costs from './views/Costs.vue';
 import Stops from './views/Stops.vue';
 import TariffScale from './views/TariffScale.vue';
+import FixPay from './views/FixPay';
 
 Vue.use(Router);
 
@@ -64,6 +65,18 @@ export default new Router({
       path: '/costs',
       name: 'costs',
       component: Costs,
+      beforeEnter(to, from, next) {
+        if (localStorage.getItem('user-token')) {
+          next();
+        } else {
+          next('/');
+        }
+      }
+    },
+    {
+      path: '/fix-pay',
+      name: 'FixPay',
+      component: FixPay,
       beforeEnter(to, from, next) {
         if (localStorage.getItem('user-token')) {
           next();
