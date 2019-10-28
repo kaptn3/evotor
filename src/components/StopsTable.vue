@@ -7,16 +7,28 @@
       :mobile-cards="true"
     >
       <template slot-scope="props">
-        <b-table-column field="name" label="Наименование остановки">
+        <b-table-column
+          field="name"
+          label="Наименование остановки"
+        >
           {{ props.row.name }}
         </b-table-column>
-        <b-table-column field="route" label="Маршрут">
+        <b-table-column
+          field="route"
+          label="Маршрут"
+        >
           {{ props.row.route }}
         </b-table-column>
-        <b-table-column field="sort" label="Сортировка">
+        <b-table-column
+          field="sort"
+          label="Сортировка"
+        >
           {{ props.row.sort }}
         </b-table-column>
-        <b-table-column field="actions" label=" ">
+        <b-table-column
+          field="actions"
+          label=" "
+        >
           <button
             class="btn-action edit"
             @click="edit(props.row)"
@@ -48,6 +60,7 @@
   import EditStop from './EditStop';
 
   export default {
+    components: { EditStop },
     props: {
       body: {
         type: Array,
@@ -58,7 +71,6 @@
         required: true
       }
     },
-    components: { EditStop },
     data() {
       const config = {
         headers: {
@@ -87,6 +99,14 @@
         return data;
       }
     },
+    watch: {
+      isModalActive() {
+        this.$emit('update', this.isModalActive);
+      },
+      deleteEvent() {
+        this.$emit('delete', this.deleteEvent);
+      }
+    },
     methods: {
       edit(obj) {
         this.isModalActive = true;
@@ -98,24 +118,16 @@
         body.set('id', id);
         const config = {
           method: 'DELETE',
-          url: url,
+          url,
           data: body,
           headers: {
             'Authorization': `Bearer ${this.$store.state.token}`
           }
         };
         axios(config)
-          .then((res) => {
+          .then(() => {
             this.deleteEvent++;
           });
-      }
-    },
-    watch: {
-      isModalActive() {
-        this.$emit('update', this.isModalActive);
-      },
-      deleteEvent() {
-        this.$emit('delete', this.deleteEvent);
       }
     }
   };

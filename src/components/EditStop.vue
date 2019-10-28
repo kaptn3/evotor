@@ -53,7 +53,7 @@
       }
     },
     data() {
-      const item = this.item;
+      const { item } = this;
 
       return {
         status: '',

@@ -30,19 +30,34 @@
       :mobile-cards="true"
     >
       <template slot-scope="props">
-        <b-table-column field="name" label="Маршрут">
+        <b-table-column
+          field="name"
+          label="Маршрут"
+        >
           {{ props.row.route }}
         </b-table-column>
-        <b-table-column field="pay_btn" label="Кнопка оплаты">
+        <b-table-column
+          field="pay_btn"
+          label="Кнопка оплаты"
+        >
           {{ props.row.pay_btn }}
         </b-table-column>
-        <b-table-column field="car" label="Машина">
+        <b-table-column
+          field="car"
+          label="Машина"
+        >
           {{ props.row.car === null ? '-' : props.row.car }}
         </b-table-column>
-        <b-table-column field="driver" label="Водитель">
+        <b-table-column
+          field="driver"
+          label="Водитель"
+        >
           {{ props.row.driver === null ? '-' : props.row.driver }}
         </b-table-column>
-        <b-table-column field="time" label="Дата и время">
+        <b-table-column
+          field="time"
+          label="Дата и время"
+        >
           {{ getTime(props.row.time) }}
         </b-table-column>
       </template>
@@ -57,11 +72,10 @@
 
 <script>
   import axios from 'axios';
-  import ATable from '../components/ATable';
+  import moment from 'moment';
 
   export default {
     name: 'Costs',
-    components: { ATable },
     data() {
       const config = {
         headers: {
@@ -99,7 +113,7 @@
       },
       getTime(time) {
         const date = new Date(time);
-        return `${date.getUTCDate()}.${date.getUTCMonth()}.${date.getUTCFullYear()}`;
+        return moment(date).format('HH:mm, DD.MM.YYYY');
       }
     }
   };
