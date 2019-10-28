@@ -7,32 +7,34 @@
       v-if="$store.state.token"
       slot="start"
     >
-      <b-navbar-item
-        tag="router-link"
-        to="/routes"
-      >
-        Номера маршрутов
-      </b-navbar-item>
-      <b-navbar-item
-        tag="router-link"
-        to="/stops"
-      >
-        Остановки
-      </b-navbar-item>
-      <!--
-      <b-navbar-item
-        tag="router-link"
-        to="/costs"
-      >
-        Стоимости проезда
-      </b-navbar-item>
-      -->
-      <b-navbar-item
-        tag="router-link"
-        to="/tariff-scale"
-      >
-        Тарифная сетка
-      </b-navbar-item>
+      <b-navbar-dropdown label="Справочники">
+        <b-navbar-item
+          tag="router-link"
+          to="/routes"
+        >
+          Номера маршрутов
+        </b-navbar-item>
+        <b-navbar-item
+          tag="router-link"
+          to="/stops"
+        >
+          Остановки
+        </b-navbar-item>
+        <!--
+        <b-navbar-item
+          tag="router-link"
+          to="/costs"
+        >
+          Стоимости проезда
+        </b-navbar-item>
+        -->
+        <b-navbar-item
+          tag="router-link"
+          to="/tariff-scale"
+        >
+          Тарифная сетка
+        </b-navbar-item>
+      </b-navbar-dropdown>
       <b-navbar-item
         tag="router-link"
         to="/fix-pay"
@@ -51,6 +53,18 @@
       v-if="$store.state.token"
       slot="end"
     >
+      <b-navbar-item
+        tag="router-link"
+        to="/help"
+      >
+        Помощь
+      </b-navbar-item>
+      <b-navbar-item
+        tag="router-link"
+        to="/contacts"
+      >
+        Контакты
+      </b-navbar-item>
       <b-navbar-item tag="div">
         <div class="buttons">
           <button

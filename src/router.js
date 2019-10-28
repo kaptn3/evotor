@@ -7,6 +7,8 @@ import Stops from './views/Stops.vue';
 import TariffScale from './views/TariffScale.vue';
 import FixPay from './views/FixPay';
 import StatsTariff from './views/StatsTariff';
+import Help from './views/Help';
+import Contacts from './views/Contacts';
 
 Vue.use(Router);
 
@@ -97,6 +99,16 @@ export default new Router({
           next('/');
         }
       }
+    },
+    {
+      path: '/help',
+      name: 'Help',
+      component: Help,
+    },
+    {
+      path: '/contacts',
+      name: 'Contacts',
+      component: Contacts,
     },
     {
       path: '*',
