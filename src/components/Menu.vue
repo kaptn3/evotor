@@ -105,9 +105,10 @@
 
 
 <style>
-  .router-link-active {
+  .router-link-active.navbar-item {
     background-color: #0e71de;
     font-weight: 500;
+    color: #fff;
   }
 
   @media screen and (max-width: 1023px) {
