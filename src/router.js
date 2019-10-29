@@ -10,6 +10,7 @@ import StatsTariff from './views/StatsTariff';
 import Help from './views/Help';
 import Contacts from './views/Contacts';
 import Cars from './views/Cars';
+import Drivers from './views/Drivers';
 
 Vue.use(Router);
 
@@ -103,8 +104,20 @@ export default new Router({
     },
     {
       path: '/cars',
-      name: 'cars',
+      name: 'Cars',
       component: Cars,
+      beforeEnter(to, from, next) {
+        if (localStorage.getItem('user-token')) {
+          next();
+        } else {
+          next('/');
+        }
+      }
+    },
+    {
+      path: '/drivers',
+      name: 'Drivers',
+      component: Drivers,
       beforeEnter(to, from, next) {
         if (localStorage.getItem('user-token')) {
           next();

@@ -40,6 +40,12 @@
         >
           Машины
         </b-navbar-item>
+        <b-navbar-item
+          tag="router-link"
+          to="/drivers"
+        >
+          Водители
+        </b-navbar-item>
       </b-navbar-dropdown>
       <b-navbar-item
         tag="router-link"
