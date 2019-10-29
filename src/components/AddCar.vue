@@ -1,0 +1,109 @@
+<template>
+  <div class="card">
+    <b-message
+      v-if="status === 'ok'"
+      type="is-success"
+    >
+      Готово
+    </b-message>
+    <b-message
+      v-if="status === 'error'"
+      type="is-warning"
+    >
+      Произошла ошибка
+    </b-message>
+    <form
+      v-if="status === ''"
+      @submit="submitForm"
+    >
+      <h2 class="title is-3">
+        Добавить машину
+      </h2>
+      <b-field label="Номер машины">
+        <b-input
+          v-model="num"
+          required
+        />
+      </b-field>
+      <b-field label="Маршрут">
+        <b-select
+          v-model="routeId"
+          type="is-info"
+          placeholder="Выберите маршрут"
+          required
+        >
+          <option
+            v-for="(option, index) in routes"
+            :key="index"
+            :value="option.id"
+          >
+            {{ option.name }}
+          </option>
+        </b-select>
+      </b-field>
+      <button class="button is-info is-fullwidth">
+        Сохранить
+      </button>
+    </form>
+  </div>
+</template>
+
+<script>
+  import axios from 'axios';
+
+  export default {
+    name: 'AddCar',
+    data() {
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${this.$store.state.token}`
+        }
+      };
+
+      return {
+        routeId: undefined,
+        routes: [],
+        num: '',
+        status: '',
+        config
+      };
+    },
+    mounted() {
+      const url = `${process.env.VUE_APP_API}routes/`;
+      axios.get(url, this.config)
+        .then((res) => {
+          this.routes = res.data;
+        })
+        .catch(() => {
+          this.$router.push('/login');
+        });
+    },
+    methods: {
+      submitForm(e) {
+        e.preventDefault();
+        const body = new FormData();
+        body.set('route_id', this.routeId);
+        body.set('num', this.num);
+
+        const url = `${process.env.VUE_APP_API}cars/`;
+        axios.post(url, body, this.config)
+          .then(() => {
+            this.status = 'ok';
+          })
+          .catch(() => {
+            this.status = 'error';
+          });
+      }
+    }
+  };
+</script>
+
+<style scoped>
+  .card {
+    padding: 30px;
+  }
+
+  .button {
+    margin-top: 20px;
+  }
+</style>

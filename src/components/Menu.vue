@@ -34,6 +34,12 @@
         >
           Тарифная сетка
         </b-navbar-item>
+        <b-navbar-item
+          tag="router-link"
+          to="/cars"
+        >
+          Машины
+        </b-navbar-item>
       </b-navbar-dropdown>
       <b-navbar-item
         tag="router-link"

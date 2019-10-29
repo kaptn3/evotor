@@ -9,6 +9,7 @@ import FixPay from './views/FixPay';
 import StatsTariff from './views/StatsTariff';
 import Help from './views/Help';
 import Contacts from './views/Contacts';
+import Cars from './views/Cars';
 
 Vue.use(Router);
 
@@ -92,6 +93,18 @@ export default new Router({
       path: '/stats-tariff',
       name: 'StatsTariff',
       component: StatsTariff,
+      beforeEnter(to, from, next) {
+        if (localStorage.getItem('user-token')) {
+          next();
+        } else {
+          next('/');
+        }
+      }
+    },
+    {
+      path: '/cars',
+      name: 'cars',
+      component: Cars,
       beforeEnter(to, from, next) {
         if (localStorage.getItem('user-token')) {
           next();
