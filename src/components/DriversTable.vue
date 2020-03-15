@@ -40,7 +40,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import EditDriver from './EditDriver';
 
   export default {
@@ -64,14 +63,7 @@
       }
     },
     data() {
-      const config = {
-        headers: {
-          'Authorization': `Bearer ${this.$store.state.token}`
-        }
-      };
-
       return {
-        config,
         item: undefined,
         isModalActive: false
       };

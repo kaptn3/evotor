@@ -22,6 +22,21 @@
         </button>
       </p>
     </b-field>
+    <div class="block">
+      <b-checkbox
+        v-for="item in drivers"
+        :key="item + '-driver'"
+        v-model="checkDrivers"
+        :native-value="item"
+        type="is-info"
+      >
+        {{ item }}
+      </b-checkbox>
+    </div>
+    <chart
+      :data="table"
+      :drivers="checkDrivers"
+    />
     <b-table
       v-if="table.length > 0"
       :data="table"
@@ -85,8 +100,10 @@
 <script>
   import axios from 'axios';
   import moment from 'moment';
+  import Chart from '../components/Chart';
 
   export default {
+    components: { Chart },
     data() {
       const config = {
         headers: {
@@ -98,9 +115,23 @@
         data: [],
         config,
         routeId: undefined,
-        table: [],
-        loading: true
+        allData: [],
+        loading: true,
+        drivers: [],
+        checkDrivers: []
       };
+    },
+    computed: {
+      table() {
+        return this.allData.filter((item) => {
+          for (let i = 0; i < this.checkDrivers.length; i++) {
+            if (item.driver === this.checkDrivers[i]) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
     },
     mounted() {
       const url = `${process.env.VUE_APP_API}routes/`;
@@ -118,7 +149,46 @@
         const url = `${process.env.VUE_APP_API}scale-st/?route_id=${this.routeId}`;
         axios.get(url, this.config)
           .then((res) => {
-            this.table = res.data;
+            // this.allData = res.data;
+            this.allData = [
+              {
+                stop_point_from: 'Донской',
+                stop_point_to: 'Тула',
+                cost: 135.3,
+                car: null,
+                driver: 'null',
+                cost_type: 1,
+                time: '2020-02-18T14:56:52.160392Z'
+              },
+              {
+                stop_point_from: 'Донской',
+                stop_point_to: 'Тула',
+                cost: 145.3,
+                car: null,
+                driver: 'nul',
+                cost_type: 1,
+                time: '2019-10-23T17:50:22.046997Z'
+              },
+              {
+                stop_point_from: 'Донской',
+                stop_point_to: 'Тула',
+                cost: 105.3,
+                car: null,
+                driver: 'nful',
+                cost_type: 1,
+                time: '2020-02-18T14:56:52.160392Z'
+              },
+              {
+                stop_point_from: 'Донской',
+                stop_point_to: 'Тула',
+                cost: 141.3,
+                car: null,
+                driver: 'nul',
+                cost_type: 1,
+                time: '2020-02-18T14:56:52.160392Z'
+              }
+            ];
+            this.setDrivers();
             this.loading = false;
           });
       },
@@ -135,6 +205,13 @@
         }
 
         return text;
+      },
+      setDrivers() {
+        for (let k = 0; k < this.allData.length; k++) {
+          this.drivers.push(this.allData[k].driver);
+        }
+        this.drivers = this.drivers.filter((item, i, ar) => ar.indexOf(item) === i);
+        this.checkDrivers = this.drivers;
       }
     }
   };
