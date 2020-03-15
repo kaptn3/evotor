@@ -11,6 +11,7 @@ import Help from './views/Help';
 import Contacts from './views/Contacts';
 import Cars from './views/Cars';
 import Drivers from './views/Drivers';
+import ShowCheck from './views/ShowCheck';
 
 Vue.use(Router);
 
@@ -125,6 +126,11 @@ export default new Router({
           next('/');
         }
       }
+    },
+    {
+      path: '/showCheck/:id?',
+      name: 'ShowCheck',
+      component: ShowCheck
     },
     {
       path: '/help',
