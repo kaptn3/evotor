@@ -10,14 +10,7 @@
   export default {
     name: 'ShowCheck',
     data() {
-      const config = {
-        headers: {
-          'Authorization': `Bearer ${this.$store.state.token}`
-        }
-      };
-
       return {
-        config,
         error: ''
       };
     },
