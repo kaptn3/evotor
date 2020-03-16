@@ -21,7 +21,7 @@
       getLink() {
         const qrCode = this.$route.params.id ? this.$route.params.id : '';
         const url = `${process.env.VUE_APP_API}check-receipt/?qr_code=${qrCode}`;
-        axios.get(url, this.config)
+        axios.get(url)
           .then((res) => {
             const link = res.data.receipt_link;
             window.location = link;
