@@ -5,8 +5,9 @@
 </template>
 
 <script>
-  import Highcharts from 'highcharts';
+  import Highcharts, { seriesType } from 'highcharts';
   import { Chart } from 'highcharts-vue';
+  import moment from 'moment';
 
   Highcharts.setOptions({
     lang: {
@@ -24,6 +25,9 @@
         'Понедельник', 'Вторник', 'Среда', 'Четверг',
         'Пятница', 'Суббота', 'Воскресение'
       ],
+    },
+    global: {
+      useUTC: false
     }
   });
 
@@ -98,7 +102,45 @@
               }
             }
           }
-          this.series = series;
+          let dates = [];
+          let timestamp = [];
+          for (let i = 0; i < series.length; i++) {
+            const arr = [];
+            const arrr = [];
+            const timeArr = [];
+            for (let k = 0; k < series[i].data.length; k++) {
+              const date = moment(series[i].data[k][0]).format('DD.MM.YYYY');
+              arr.push(date);
+              arrr.push(series[i].data[k][0]);
+            }
+            arr = arr.filter((item, i, ar) => {
+              if (ar.indexOf(item) === i) {
+                timeArr.push(arrr[i]);
+              }
+              return ar.indexOf(item) === i;
+            });
+            dates.push(arr);
+            timestamp.push(timeArr);
+          }
+          const filterSeries = [];
+          for (let i = 0; i < dates.length; i++) {
+            const newArr = [];
+            for (let k = 0; k < dates[i].length; k++) {
+              let total = 0;
+              for (let l = 0; l < series[i].data.length; l++) {
+                const newDate = moment(series[i].data[l][0]).format('DD.MM.YYYY');
+                if (newDate === dates[i][k]) {
+                  total += series[i].data[l][1];
+                }
+              }
+              newArr.push([timestamp[i][k], total]);
+            }
+            filterSeries.push({
+              name: series[i].name,
+              data: newArr
+            });
+          }
+          this.series = filterSeries;
         }
       },
       series() {

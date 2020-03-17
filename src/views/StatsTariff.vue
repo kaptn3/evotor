@@ -149,45 +149,7 @@
         const url = `${process.env.VUE_APP_API}scale-st/?route_id=${this.routeId}`;
         axios.get(url, this.config)
           .then((res) => {
-            // this.allData = res.data;
-            this.allData = [
-              {
-                stop_point_from: 'Донской',
-                stop_point_to: 'Тула',
-                cost: 135.3,
-                car: null,
-                driver: 'null',
-                cost_type: 1,
-                time: '2020-02-18T14:56:52.160392Z'
-              },
-              {
-                stop_point_from: 'Донской',
-                stop_point_to: 'Тула',
-                cost: 145.3,
-                car: null,
-                driver: 'nul',
-                cost_type: 1,
-                time: '2019-10-23T17:50:22.046997Z'
-              },
-              {
-                stop_point_from: 'Донской',
-                stop_point_to: 'Тула',
-                cost: 105.3,
-                car: null,
-                driver: 'nful',
-                cost_type: 1,
-                time: '2020-02-18T14:56:52.160392Z'
-              },
-              {
-                stop_point_from: 'Донской',
-                stop_point_to: 'Тула',
-                cost: 141.3,
-                car: null,
-                driver: 'nul',
-                cost_type: 1,
-                time: '2020-02-18T14:56:52.160392Z'
-              }
-            ];
+            this.allData = res.data;
             this.setDrivers();
             this.loading = false;
           });
